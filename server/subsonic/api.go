@@ -192,6 +192,10 @@ func h(r chi.Router, path string, f handler) {
 			sendError(w, r, err)
 			return
 		}
+		if r.Context().Err() != nil {
+			log.Warn("Request was interrupted", "path", path, r.Context().Err())
+			return
+		}
 		if res != nil {
 			sendResponse(w, r, res)
 		}
@@ -200,12 +204,12 @@ func h(r chi.Router, path string, f handler) {
 	r.HandleFunc("/"+path+".view", handle)
 }
 
-// Add a handler that returns 510 - Not implemented. Used to signal that an endpoint is not implemented yet
+// Add a handler that returns 501 - Not implemented. Used to signal that an endpoint is not implemented yet
 func h501(r *chi.Mux, paths ...string) {
 	for _, path := range paths {
 		handle := func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Add("Cache-Control", "no-cache")
-			w.WriteHeader(510)
+			w.WriteHeader(501)
 			_, _ = w.Write([]byte("This endpoint is not implemented, but may be in future releases"))
 		}
 		r.HandleFunc("/"+path, handle)

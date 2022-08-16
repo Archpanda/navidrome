@@ -9,7 +9,7 @@ GIT_SHA=source_archive
 GIT_TAG=$(patsubst navidrome-%,v%,$(notdir $(PWD)))
 endif
 
-CI_RELEASER_VERSION=1.17.2-1 ## https://github.com/navidrome/ci-goreleaser
+CI_RELEASER_VERSION=1.18.4-1 ## https://github.com/navidrome/ci-goreleaser
 
 setup: check_env download-deps setup-git ##@1_Run_First Install dependencies and prepare development environment
 	@echo Downloading Node dependencies...
@@ -25,7 +25,7 @@ server: check_go_env  ##@Development Start the backend in development mode
 .PHONY: server
 
 watch: ##@Development Start Go tests in watch mode (re-run when code changes)
-	go run github.com/onsi/ginkgo/ginkgo watch -notify ./...
+	go run github.com/onsi/ginkgo/v2/ginkgo watch -notify ./...
 .PHONY: watch
 
 test: ##@Development Run Go tests
@@ -49,7 +49,7 @@ wire: check_go_env ##@Development Update Dependency Injection
 .PHONY: wire
 
 snapshots: ##@Development Update (GoLang) Snapshot tests
-	UPDATE_SNAPSHOTS=true go run github.com/onsi/ginkgo/ginkgo ./server/subsonic/...
+	UPDATE_SNAPSHOTS=true go run github.com/onsi/ginkgo/v2/ginkgo ./server/subsonic/...
 .PHONY: snapshots
 
 migration: ##@Development Create an empty migration file

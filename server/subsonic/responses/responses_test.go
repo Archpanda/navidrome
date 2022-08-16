@@ -1,5 +1,4 @@
 //go:build linux || darwin
-// +build linux darwin
 
 // TODO Fix snapshot tests in Windows
 // Response Snapshot tests. Only run in Linux and macOS, as they fail in Windows
@@ -13,7 +12,7 @@ import (
 
 	"github.com/navidrome/navidrome/consts"
 	. "github.com/navidrome/navidrome/server/subsonic/responses"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
